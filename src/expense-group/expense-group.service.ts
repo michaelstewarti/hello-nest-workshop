@@ -1,13 +1,21 @@
-import { Get, Injectable, Post } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateExpenseGroupDto } from './dto/create-expense-group.dto';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 @Injectable()
 export class ExpenseGroupService {
-  getAllExpenseGroups(): string {
-    return 'gastos';
+  async getAllExpenseGroups() {
+    return prisma.expenseGroup.findMany();
   }
 
-  createExpenseGroup(expenseGroupDto: CreateExpenseGroupDto) {
-    return 'gasto creado';
+  async createExpenseGroup(expenseGroupDto: CreateExpenseGroupDto) {
+    return prisma.expenseGroup.create({
+      data: {
+        name: expenseGroupDto.name,
+        color: expenseGroupDto.color,
+      },
+    });
   }
 }

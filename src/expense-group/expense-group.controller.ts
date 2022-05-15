@@ -7,7 +7,7 @@ export class ExpenseGroupController {
   constructor(private expenseGroupService: ExpenseGroupService) {}
 
   @Get('/')
-  getAllExpenseGroups(): string {
+  getAllExpenseGroups() {
     return this.expenseGroupService.getAllExpenseGroups();
   }
 
