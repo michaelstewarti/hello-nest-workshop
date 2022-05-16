@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExpenseGroupDto } from './dto/create-expense-group.dto';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { PrismaService } from '../common/prisma.service';
 
 @Injectable()
 export class ExpenseGroupService {
+  prisma: PrismaService;
+  constructor(prisma: PrismaService) {
+    this.prisma = prisma;
+  }
+
   async getAllExpenseGroups() {
-    return prisma.expenseGroup.findMany();
+    return this.prisma.expenseGroup.findMany();
   }
 
   async createExpenseGroup(expenseGroupDto: CreateExpenseGroupDto) {
-    return prisma.expenseGroup.create({
+    return this.prisma.expenseGroup.create({
       data: {
         name: expenseGroupDto.name,
         color: expenseGroupDto.color,
